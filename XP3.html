@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+        #target {
+          width: 200px;
+          height: 200px;
+          position: relative;
+          background: yellow;
+        }
+        #box {
+          width: 50px;
+          height: 50px;
+          position: absolute;
+          background-color: red;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="target"></div>
+        <br>
+        <div id="box"></div>
+        <script>
+            var box = document.getElementById("box");
+           var target = document.getElementById("target");
+
+            box.addEventListener("mousedown", dragStart);
+            box.addEventListener("mouseup", dragEnd);
+
+        function dragStart(e) {
+         e.preventDefault();
+         startX = e.clientX - box.offsetLeft;
+         startY = e.clientY - box.offsetTop;
+           document.addEventListener("mousemove", moveBox);
+         }
+
+        function dragEnd(e) {
+       document.removeEventListener("mousemove", moveBox);
+        }
+
+        function moveBox(e) {
+          e.preventDefault();
+          box.style.left = (e.clientX - startX) + "px";
+          box.style.top = (e.clientY - startY) + "px";
+         if (box.offsetLeft >= target.offsetLeft && box.offsetTop >= target.offsetTop && 
+            box.offsetLeft + box.offsetWidth <= target.offsetLeft + target.offsetWidth &&
+            box.offsetTop + box.offsetHeight <= target.offsetTop + target.offsetHeight) {
+            box.style.backgroundColor = "green";
+            } else {
+            box.style.backgroundColor = "red";
+          }
+         }
+        </script>
+    </body>
+    </html>
