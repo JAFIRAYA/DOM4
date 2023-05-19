@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .task-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.task-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.task-item .delete-button {
+  margin-left: 10px;
+  color: red;
+  cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <form id="task-form">
+        <input type="text" id="task-input" placeholder="Enter a task">
+        <button type="submit">Submit</button>
+      </form>
+      
+      <div class="listTasks"></div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+  const taskForm = document.getElementById('task-form');
+  const taskInput = document.getElementById('task-input');
+  const taskList = document.querySelector('.listTasks');
+  const tasks = [];
+
+  function addTask(taskText) {
+    const taskItem = document.createElement('div');
+    taskItem.classList.add('task-item');
+
+    const deleteButton = document.createElement('i');
+    deleteButton.classList.add('fas', 'fa-times', 'delete-button');
+    deleteButton.addEventListener('click', function() {
+      removeTask(taskItem);
+    });
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.addEventListener('change', function() {
+      taskItem.classList.toggle('completed');
+    });
+
+    const taskLabel = document.createElement('label');
+    taskLabel.textContent = taskText;
+
+    taskItem.appendChild(deleteButton);
+    taskItem.appendChild(checkbox);
+    taskItem.appendChild(taskLabel);
+
+    taskList.appendChild(taskItem);
+  }
+
+  function removeTask(taskItem) {
+    taskList.removeChild(taskItem);
+  }
+
+  taskForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const taskText = taskInput.value.trim();
+    if (taskText !== '') {
+      tasks.push(taskText);
+      addTask(taskText);
+      taskInput.value = '';
+    }
+  });
+});
+
+      </script>
+</body>
+</html>
